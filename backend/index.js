@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/building", buildingRoute);
 
-app.listen(SERVER_PORT, () => {
+app.listen(`${process.env.SERVER_PORT}`, () => {
     console.log(`Server running on port ${SERVER_PORT}`)
 })
 
