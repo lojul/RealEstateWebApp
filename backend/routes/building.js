@@ -18,13 +18,13 @@ router.get("/search", async (req, res) => {
 router.post("/add", async (req, res) => {
 
     const name = req.body.name;
-    const year = req.body.year;
+    const year = parseInt(req.body.year);
     const address = req.body.address;
     const district = req.body.district;
     const coordinates = req.body.coordinates;
-    const numOfTowers = req.body.numOfTowers;
-    const numOfUnits = req.body.numOfUnits;
-    const facilities = req.body.facilities;
+    const numOfTowers = parseInt(req.body.numOfTowers);
+    const numOfUnits = parseInt(req.body.numOfUnits);
+    const facilities = (req.body.facilities).split(',');
     const description = req.body.description;
     const developer = req.body.developer;
     const propertyManagement = req.body.propertyManagement;
@@ -35,7 +35,7 @@ router.post("/add", async (req, res) => {
     controller
         .addBuilding(name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, images, floorPlan, otherFiles)
         .then((data) => {
-            res.send(data);
+            res.send({ message: "Building deleted successfully!" });
         })
         .catch((error) => {
             res.send(error)
