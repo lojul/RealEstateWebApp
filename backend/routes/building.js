@@ -3,9 +3,16 @@ const router = express.Router();
 const controller = require("../controllers/buildingController")
 
 // for searching
+// only implemented search by id, yet to complete
 router.get("/search", async (req, res) => {
+    const searchBy = req.query.searchBy; // by id or name
+    const searchByValue = req.query.searchByValue; // by what id or name
+
+    // modifyyyyyyy
+    const id = parseInt(searchByValue);
+
     controller
-        .getDetails()
+        .getDetails(id)
         .then((data) => {
             res.send(data.rows);
         })
@@ -35,7 +42,7 @@ router.post("/add", async (req, res) => {
     controller
         .addBuilding(name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, images, floorPlan, otherFiles)
         .then((data) => {
-            res.send({ message: "Building deleted successfully!" });
+            res.send({ message: "Building added successfully!" });
         })
         .catch((error) => {
             res.send(error)

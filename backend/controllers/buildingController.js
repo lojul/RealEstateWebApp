@@ -18,11 +18,11 @@ client.connect(function (err) {
 });
 
 // get buildings
-const getDetails = () => {
-    const sql = 'SELECT * FROM buildings';
+const getDetails = (id) => {
+    const sql = 'SELECT * FROM buildings WHERE id = $1';
 
     return new Promise(async (resolve, reject) => {
-        client.query(sql)
+        client.query(sql, [id])
             .then((data) => {
                 resolve(data)
             })
