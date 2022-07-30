@@ -96,4 +96,18 @@ router.delete("/delete", async (req, res) => {
 
 })
 
+// for getting all
+router.get("/getAll", async (req, res) => {
+
+    controller
+        .getAll()
+        .then((data) => {
+            res.send(data);
+        })
+        .catch((error) => {
+            res.send(error)
+        });
+
+})
+
 module.exports = router;

@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AgentHome from '../pages/AgentHome';
 import CustomerHome from '../pages/CustomerHome';
+import AddNewBuildingPage from '../pages/AddNewBuildingPage';
+import SearchBuildingPage from '../pages/SearchBuildingPage';
 
 // import { AuthContext } from '../Helpers/AuthContext';
 // import { useState, useEffect } from 'react';
@@ -32,13 +33,14 @@ function app() {
         // <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
             <Routes>
-                <Route path="/" element={<AgentHome />} />
-                <Route path="/Customer" element={<CustomerHome />} />
+                <Route path="/" element={<CustomerHome />} />
+                <Route path="/AddNewBuilding" element={<AddNewBuildingPage />} />
+                <Route path="/SearchBuilding" element={<SearchBuildingPage />} />
 
                 {/* <Route path="/MemberClientRequest/:clientId" element={<MemberClientRequest />} /> */}
 
 
-                <Route path="*" element={<AgentHome />} />
+                <Route path="*" element={<CustomerHome />} />
             </Routes>
         </Router>
         // </AuthContext.Provider>

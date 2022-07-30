@@ -79,9 +79,25 @@ const deleteBuilding = (id) => {
 
 }
 
+// delete building entirely
+const getAll = () => {
+    const sql = 'SELECT id, name, year, address, district FROM buildings';
+    return new Promise(async (resolve, reject) => {
+        client.query(sql)
+            .then((data) => {
+                resolve(data.rows)
+            })
+            .catch((error) => {
+                reject(error);
+            })
+    });
+
+}
+
 module.exports = {
     getDetails,
     addBuilding,
     updateBuilding,
-    deleteBuilding
+    deleteBuilding,
+    getAll
 }
