@@ -28,6 +28,18 @@ export default function TableExample(props) {
     }, []);
 
     const search = () => {
+        console.log(term)
+        if (term !== '') {
+            Axios.get(`${process.env.REACT_APP_SERVER}/building/search?term=${term}`)
+                .then((response) => {
+
+                    setBuildings(response.data);
+
+                }).catch((e) => {
+                    alert(e.response.data.error);
+
+                })
+        }
 
     }
     return (
@@ -44,7 +56,7 @@ export default function TableExample(props) {
                     value={term}
                     onChange={handleChange}
                 />
-                <IconButton type="submit" sx={{ p: '10px' }} aria-label="search" onClick={search}>
+                <IconButton sx={{ p: '10px' }} aria-label="search" onClick={search}>
                     <SearchIcon />
                 </IconButton>
 

@@ -4,7 +4,7 @@ const controller = require("../controllers/buildingController")
 
 // search by name, address, district
 router.get("/search", async (req, res) => {
-    const term = req.body.term;
+    const term = req.query.term;
 
     controller
         .getDetails(term)
@@ -14,6 +14,8 @@ router.get("/search", async (req, res) => {
         .catch((error) => {
             res.send(error)
         });
+
+
 });
 
 // for adding
