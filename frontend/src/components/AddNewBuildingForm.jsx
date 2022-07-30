@@ -3,9 +3,16 @@ import Button from '@mui/material/Button';
 import { Stack } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
-import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Axios from 'axios';
+import {
+    ref,
+    uploadBytes,
+
+} from "firebase/storage";
+import { storage } from "../firebase";
+import { v4 } from "uuid";
+import { buildingSchema } from '../Validations/newBuildingValidation';
 
 export default function AddNewBuildingForm() {
     const [values, setValues] = React.useState({
@@ -25,6 +32,7 @@ export default function AddNewBuildingForm() {
     const [fileImages, setFileImages] = React.useState([]);
     const [fileFloorplan, setFileFloorplan] = React.useState([]);
     const [fileOther, setFileOther] = React.useState([]);
+
     const selectFileImages = (e) => {
         setFileImages(e.target.files);
 
@@ -37,41 +45,96 @@ export default function AddNewBuildingForm() {
         setFileOther(e.target.files);
 
     }
-    const submit = () => {
+    const submit = async (e) => {
 
-        if (typeof parseInt(values.year) === 'number' && typeof parseInt(values.numOfTowers) === 'number' && typeof parseInt(values.numOfUnits) === 'number') {
-            Axios.post(`${process.env.REACT_APP_SERVER}/building/add`, {
-                // Axios.post("http://localhost:3001/building/add", {
-                name: values.name,
-                year: values.year,
-                address: values.address,
-                district: values.district,
-                numOfTowers: values.numOfTowers,
-                numOfUnits: values.numOfUnits,
-                facilities: values.facilities,
-                description: values.description,
-                developer: values.developer,
-                projectManagement: values.projectManagement,
-            }).then((response) => {
-
-                alert(response.data.message)
-            }).catch((e) => {
-
-                alert(e.response.data.error);
-            })
-        } else {
-            alert("Invalid input!")
+        e.preventDefault();
+        let formData = {
+            name: values.name,
+            year: values.year,
+            address: values.address,
+            district: values.district,
+            numOfTowers: values.numOfTowers,
+            numOfUnits: values.numOfUnits,
+            facilities: values.facilities,
+            description: values.description,
+            developer: values.developer,
+            propertyManagement: values.propertyManagement,
         }
+        const isValid = await buildingSchema.isValid(formData);
+        // use FORMIK to display errors on input validations
+        console.log(isValid)
+        if (isValid === false) alert("Invalid inputs!")
+        else {
+            if (typeof parseInt(values.year) === 'number' && typeof parseInt(values.numOfTowers) === 'number' && typeof parseInt(values.numOfUnits) === 'number') {
+                Axios.post(`${process.env.REACT_APP_SERVER}/building/add`, {
+
+                    name: values.name,
+                    year: values.year,
+                    address: values.address,
+                    district: values.district,
+                    numOfTowers: values.numOfTowers,
+                    numOfUnits: values.numOfUnits,
+                    facilities: values.facilities,
+                    description: values.description,
+                    developer: values.developer,
+                    propertyManagement: values.propertyManagement,
+
+                }).then((response) => {
+
+                    alert(response.data.message)
+                }).catch((e) => {
+
+                    alert(e.response.data.error);
+                })
+            } else {
+                alert("Invalid input!")
+            }
+
+        }
+
+
+    }
+    const submitBuildingImages = () => {
+        if (fileImages.length === 0) return;
+        const filePath = `buildingImages/${fileImages[0].name + v4()}`
+        const imageRef = ref(storage, filePath);
+        uploadBytes(imageRef, fileImages[0]).then(() => {
+            alert("Building images uploaded!")
+        });
+
+    }
+    const submitFloorPlans = () => {
+        if (fileFloorplan.length === 0) return;
+
+        const filePath = `buildingFloorPlans/${fileFloorplan[0].name + v4()}`
+        const imageRef = ref(storage, filePath);
+        uploadBytes(imageRef, fileFloorplan[0]).then(() => {
+            alert("Floor plans uploaded!")
+        });
+        return filePath;
+
+    }
+    const submitOtherFiles = () => {
+        if (fileOther.length === 0) return;
+
+        const filePath = `buildingOtherFiles/${fileOther[0].name + v4()}`
+        const imageRef = ref(storage, filePath);
+        uploadBytes(imageRef, fileOther[0]).then(() => {
+            alert("Other files uploaded!")
+        });
+        return filePath;
 
     }
     const submitImages = () => {
-        const formData = new FormData();
-        formData.append('images', fileImages);
-        formData.append('floorPlan', fileFloorplan);
-        formData.append('other', fileOther);
 
-        // create put request and endpoint to upload the images
-        // try to do both at once
+        submitBuildingImages();
+        submitFloorPlans();
+        submitOtherFiles();
+        // ISSUES TO RESOLVE
+        // multiple file upload issue
+        // make the connection with the added building and images
+        // auto cropping
+
     }
     return (
         <Stack spacing={2} sx={{ marginTop: "25px" }}>
@@ -81,7 +144,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.name}
                     onChange={handleChange('name')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="Name"
                 />
             </FormControl>
@@ -91,7 +154,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.year}
                     onChange={handleChange('year')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="Year"
                 />
             </FormControl>
@@ -101,7 +164,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.address}
                     onChange={handleChange('address')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="Address"
                 />
             </FormControl>
@@ -111,7 +174,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.district}
                     onChange={handleChange('district')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="District"
                 />
             </FormControl>
@@ -121,7 +184,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.numOfTowers}
                     onChange={handleChange('numOfTowers')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="No of towers"
                 />
             </FormControl>
@@ -131,7 +194,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.numOfUnits}
                     onChange={handleChange('numOfUnits')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="No of units"
                 />
             </FormControl>
@@ -141,7 +204,8 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.facilities}
                     onChange={handleChange('facilities')}
-                    startAdornment={<InputAdornment position="start">(Comma seperated)</InputAdornment>}
+                    placeholder="Comma seperated"
+
                     label="Facilities"
                 />
             </FormControl>
@@ -151,7 +215,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.description}
                     onChange={handleChange('description')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="Description"
                 />
             </FormControl>
@@ -161,7 +225,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.developer}
                     onChange={handleChange('developer')}
-                    startAdornment={<InputAdornment position="start"></InputAdornment>}
+                    placeholder=""
                     label="Developer"
                 />
             </FormControl>
@@ -171,7 +235,7 @@ export default function AddNewBuildingForm() {
                     id="outlined-adornment-amount"
                     value={values.propertyManagement}
                     onChange={handleChange('propertyManagement')}
-                    startAdornment={<InputAdornment position="start">(Property management)</InputAdornment>}
+                    placeholder="Property management"
                     label="Company"
                 />
             </FormControl>
@@ -188,7 +252,7 @@ export default function AddNewBuildingForm() {
                 <InputLabel id="demo-simple-select-label">Upload other files (if any)</InputLabel>
                 <input type="file" onChange={selectFileOther} multiple></input>
             </>
-            <Button variant="contained" onClick={submitImages}>Upload images</Button>
+            <Button variant="contained" onClick={submitImages} type="submit">Upload images</Button>
 
         </Stack>
     );

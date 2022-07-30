@@ -33,7 +33,7 @@ function app() {
         // <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
             <Routes>
-                <Route path="/" element={<CustomerHome />} />
+                <Route path="/" element={<AddNewBuildingPage />} />
                 <Route path="/AddNewBuilding" element={<AddNewBuildingPage />} />
                 <Route path="/SearchBuilding" element={<SearchBuildingPage />} />
 

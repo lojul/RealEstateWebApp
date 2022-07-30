@@ -28,12 +28,13 @@ export default function TableExample(props) {
     }, []);
 
     const search = () => {
-        console.log(term)
+
         if (term !== '') {
             Axios.get(`${process.env.REACT_APP_SERVER}/building/search?term=${term}`)
                 .then((response) => {
 
                     setBuildings(response.data);
+                    if (buildings.length === 0) alert("No search results found!");
 
                 }).catch((e) => {
                     alert(e.response.data.error);
@@ -77,7 +78,7 @@ export default function TableExample(props) {
                             key={row.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <Td style={{ border: "1px solid black" }}>{row.name}</Td>
+                            <Td style={{ border: "1px solid black", padding: "2px" }} > <a href="url" style={{ color: "inherit", textDecoration: "none" }}>{row.name}</a></Td>
                             <Td style={{ border: "1px solid black" }}>{row.year}</Td>
                             <Td style={{ border: "1px solid black" }}>{row.address}</Td>
                             <Td style={{ border: "1px solid black" }}>{row.district}</Td>
