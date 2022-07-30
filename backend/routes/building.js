@@ -2,17 +2,12 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/buildingController")
 
-// for searching
-// only implemented search by id, yet to complete
+// search by name, address, district
 router.get("/search", async (req, res) => {
-    const searchBy = req.query.searchBy; // by id or name
-    const searchByValue = req.query.searchByValue; // by what id or name
-
-    // modifyyyyyyy
-    const id = parseInt(searchByValue);
+    const term = req.body.term;
 
     controller
-        .getDetails(id)
+        .getDetails(term)
         .then((data) => {
             res.send(data.rows);
         })

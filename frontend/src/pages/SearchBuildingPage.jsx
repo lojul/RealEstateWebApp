@@ -11,7 +11,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import SideBar from '../components/SideBar';
 import BuildingsTable from '../components/BuildingsTable';
-import SearchBar from '../components/SearchBar';
 import User from '../components/User';
 
 const drawerWidth = 240;
@@ -98,7 +97,6 @@ function SearchBuildingPage(props) {
                 sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
             >
                 <Toolbar />
-                <SearchBar></SearchBar>
                 <BuildingsTable></BuildingsTable>
 
             </Box>

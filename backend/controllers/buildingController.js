@@ -17,12 +17,13 @@ client.connect(function (err) {
     }
 });
 
-// get buildings
-const getDetails = (id) => {
-    const sql = 'SELECT * FROM buildings WHERE id = $1';
+// search by name, address, district
+const getDetails = (term) => {
+
+    const sql = "SELECT id, name, year, address, district FROM buildings WHERE LOWER(name) LIKE $1 OR LOWER(address) LIKE $1 OR LOWER(district) LIKE $1";
 
     return new Promise(async (resolve, reject) => {
-        client.query(sql, [id])
+        client.query(sql, ['%' + term.toLowerCase() + '%'])
             .then((data) => {
                 resolve(data)
             })

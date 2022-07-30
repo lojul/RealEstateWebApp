@@ -2,8 +2,17 @@ import React from 'react';
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table';
 import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css';
 import Axios from 'axios';
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function TableExample(props) {
+
+    const [term, setTerm] = React.useState('');
+    const handleChange = (event) => {
+        setTerm(event.target.value);
+    }
 
     const [buildings, setBuildings] = React.useState([]);
     React.useEffect(() => {
@@ -14,36 +23,57 @@ export default function TableExample(props) {
 
             }).catch((e) => {
                 alert(e.response.data.error);
-                // if (e.response.data.auth === false) {
-                //     alert("Please sign in again!");
-                //     navigate('/Signin');
-                // }
+
             })
     }, []);
-    return (
-        <Table style={{ border: "1px solid black" }}>
-            <Thead>
-                <Tr>
-                    <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>Name</Th>
-                    <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>Year</Th>
-                    <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>Address</Th>
-                    <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>District</Th>
-                </Tr>
-            </Thead>
-            <Tbody >
-                {buildings.map((row) => (
-                    <Tr
-                        key={row.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <Td style={{ border: "1px solid black" }}>{row.name}</Td>
-                        <Td style={{ border: "1px solid black" }}>{row.year}</Td>
-                        <Td style={{ border: "1px solid black" }}>{row.address}</Td>
-                        <Td style={{ border: "1px solid black" }}>{row.district}</Td>
 
+    const search = () => {
+
+    }
+    return (
+        <div>
+            <Paper
+                component="form"
+                sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 250, marginBottom: '15px' }}
+            >
+
+                <InputBase
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="Search Buildings"
+                    inputProps={{ 'aria-label': 'search google maps' }}
+                    value={term}
+                    onChange={handleChange}
+                />
+                <IconButton type="submit" sx={{ p: '10px' }} aria-label="search" onClick={search}>
+                    <SearchIcon />
+                </IconButton>
+
+            </Paper>
+
+            <Table style={{ border: "1px solid black" }}>
+                <Thead>
+                    <Tr>
+                        <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>Name</Th>
+                        <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>Year</Th>
+                        <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>Address</Th>
+                        <Th style={{ border: "1px solid black", backgroundColor: "#F0FFFF" }}>District</Th>
                     </Tr>
-                ))}
-            </Tbody>
-        </Table>
+                </Thead>
+                <Tbody >
+                    {buildings.map((row) => (
+                        <Tr
+                            key={row.id}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <Td style={{ border: "1px solid black" }}>{row.name}</Td>
+                            <Td style={{ border: "1px solid black" }}>{row.year}</Td>
+                            <Td style={{ border: "1px solid black" }}>{row.address}</Td>
+                            <Td style={{ border: "1px solid black" }}>{row.district}</Td>
+
+                        </Tr>
+                    ))}
+                </Tbody>
+            </Table>
+        </div>
     );
 }
