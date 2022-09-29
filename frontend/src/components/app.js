@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CustomerHome from '../pages/CustomerHome';
 import AddNewBuildingPage from '../pages/AddNewBuildingPage';
 import SearchBuildingPage from '../pages/SearchBuildingPage';
-
+import BuildingDetailsPage from '../pages/BuildingDetailsPage';
 // import { AuthContext } from '../Helpers/AuthContext';
 // import { useState, useEffect } from 'react';
 // import Axios from 'axios';
@@ -36,7 +36,7 @@ function app() {
                 <Route path="/" element={<AddNewBuildingPage />} />
                 <Route path="/AddNewBuilding" element={<AddNewBuildingPage />} />
                 <Route path="/SearchBuilding" element={<SearchBuildingPage />} />
-
+                <Route path="/BuildingDetails/:pageName" element={<BuildingDetailsPage />} />
                 {/* <Route path="/MemberClientRequest/:clientId" element={<MemberClientRequest />} /> */}
 
 

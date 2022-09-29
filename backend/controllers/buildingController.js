@@ -33,6 +33,22 @@ const getDetails = (term) => {
     });
 }
 
+// search by id
+const getBuildingDetails = (id) => {
+
+    const sql = 'SELECT name, year, address, district, coordinates, "numOfTowers", "numOfUnits", facilities, description, developer, "propertyManagement", images, "floorPlan", "otherFiles" FROM buildings WHERE id = $1';
+
+    return new Promise(async (resolve, reject) => {
+        client.query(sql, [id])
+            .then((data) => {
+                resolve(data)
+            })
+            .catch((error) => {
+                reject(error);
+            })
+    });
+}
+
 // insert a new building
 const addBuilding = (name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, images, floorPlan, otherFiles) => {
 
@@ -80,7 +96,7 @@ const deleteBuilding = (id) => {
 
 }
 
-// delete building entirely
+
 const getAll = () => {
     const sql = 'SELECT id, name, year, address, district FROM buildings';
     return new Promise(async (resolve, reject) => {
@@ -100,5 +116,6 @@ module.exports = {
     addBuilding,
     updateBuilding,
     deleteBuilding,
-    getAll
+    getAll,
+    getBuildingDetails
 }

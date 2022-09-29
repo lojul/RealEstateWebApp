@@ -9,7 +9,7 @@ import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 export default function SideBar() {
     const iconList = [<AddCircleIcon></AddCircleIcon>, <ManageSearchIcon></ManageSearchIcon>]
-    const links = ["./AddNewBuilding", "./SearchBuilding"]
+    const links = ["../AddNewBuilding", "../SearchBuilding"]
     return (<List>
         {['Add new building', 'Search building'].map((text, index) => (
             <ListItem button key={text} disablePadding href={links[index]} component="a">

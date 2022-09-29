@@ -74,11 +74,13 @@ export default function TableExample(props) {
                 </Thead>
                 <Tbody >
                     {buildings.map((row) => (
-                        <Tr
+
+                        < Tr
                             key={row.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-                            <Td style={{ border: "1px solid black", padding: "2px" }} > <a href="url" style={{ color: "inherit", textDecoration: "none" }}>{row.name}</a></Td>
+
+                            <Td style={{ border: "1px solid black", padding: "2px" }} > <a href="../buildingDetails/4" style={{ color: "inherit", textDecoration: "none" }}>{row.name}</a></Td>
                             <Td style={{ border: "1px solid black" }}>{row.year}</Td>
                             <Td style={{ border: "1px solid black" }}>{row.address}</Td>
                             <Td style={{ border: "1px solid black" }}>{row.district}</Td>
@@ -87,6 +89,6 @@ export default function TableExample(props) {
                     ))}
                 </Tbody>
             </Table>
-        </div>
+        </div >
     );
 }

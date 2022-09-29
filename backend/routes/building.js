@@ -14,8 +14,20 @@ router.get("/search", async (req, res) => {
         .catch((error) => {
             res.send(error)
         });
+});
 
+// search by id
+router.get("/searchById", async (req, res) => {
+    const id = req.query.id;
 
+    controller
+        .getBuildingDetails(id)
+        .then((data) => {
+            res.send(data.rows);
+        })
+        .catch((error) => {
+            res.send(error)
+        });
 });
 
 // for adding
