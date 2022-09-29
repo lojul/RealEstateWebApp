@@ -36,7 +36,7 @@ const getDetails = (term) => {
 // search by id
 const getBuildingDetails = (id) => {
 
-    const sql = 'SELECT name, year, address, district, coordinates, "numOfTowers", "numOfUnits", facilities, description, developer, "propertyManagement", images, "floorPlan", "otherFiles" FROM buildings WHERE id = $1';
+    const sql = 'SELECT id, name, year, address, district, coordinates, "numOfTowers", "numOfUnits", facilities, description, developer, "propertyManagement", images, "floorPlan", "otherFiles" FROM buildings WHERE id = $1';
 
     return new Promise(async (resolve, reject) => {
         client.query(sql, [id])
