@@ -8,6 +8,12 @@ import { Typography } from '@mui/material';
 import Axios from 'axios';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
+// import EditRoundedIcon from '@mui/icons-material/EditRounded';
+// import IconButton from '@mui/material/IconButton';
+// import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+// import OutlinedInput from '@mui/material/OutlinedInput';
+// import InputLabel from '@mui/material/InputLabel';
+// import FormControl from '@mui/material/FormControl';
 
 export default function BuildingDetails(props) {
     const navigate = useNavigate();
@@ -39,8 +45,11 @@ export default function BuildingDetails(props) {
             })
     }
 
+
     const editBuilding = () => {
         alert("You are about to edit a building!")
+        // navigate to edit page
+        navigate("../EditBuilding/4") //CHANGE
     }
 
     return (

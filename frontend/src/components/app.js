@@ -4,6 +4,7 @@ import CustomerHome from '../pages/CustomerHome';
 import AddNewBuildingPage from '../pages/AddNewBuildingPage';
 import SearchBuildingPage from '../pages/SearchBuildingPage';
 import BuildingDetailsPage from '../pages/BuildingDetailsPage';
+import EditBuildingPage from '../pages/EditBuildingPage';
 // import { AuthContext } from '../Helpers/AuthContext';
 // import { useState, useEffect } from 'react';
 // import Axios from 'axios';
@@ -37,6 +38,7 @@ function app() {
                 <Route path="/AddNewBuilding" element={<AddNewBuildingPage />} />
                 <Route path="/SearchBuilding" element={<SearchBuildingPage />} />
                 <Route path="/BuildingDetails/:pageName" element={<BuildingDetailsPage />} />
+                <Route path="/EditBuilding/:pageId" element={<EditBuildingPage />} />
                 {/* <Route path="/MemberClientRequest/:clientId" element={<MemberClientRequest />} /> */}
 
 
