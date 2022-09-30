@@ -79,7 +79,7 @@ export default function TableExample(props) {
                             key={row.id}
                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >
-
+                            {/* RESOLVE href thing */}
                             <Td style={{ border: "1px solid black", padding: "2px" }} > <a href="../buildingDetails/4" style={{ color: "inherit", textDecoration: "none" }}>{row.name}</a></Td>
                             <Td style={{ border: "1px solid black" }}>{row.year}</Td>
                             <Td style={{ border: "1px solid black" }}>{row.address}</Td>

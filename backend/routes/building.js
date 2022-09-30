@@ -92,7 +92,7 @@ router.put("/update", async (req, res) => {
 // for deleting
 router.delete("/delete", async (req, res) => {
 
-    const id = req.body.id;
+    const id = req.query.id;
 
     controller
         .deleteBuilding(id)
