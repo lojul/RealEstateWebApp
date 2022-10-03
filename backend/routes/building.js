@@ -59,7 +59,7 @@ router.post("/add", async (req, res) => {
 
 })
 
-// for updating
+// for updating without coordinates, images, floorPlan, otherFiles
 router.put("/update", async (req, res) => {
 
     const id = req.body.id;
@@ -67,23 +67,26 @@ router.put("/update", async (req, res) => {
     const year = req.body.year;
     const address = req.body.address;
     const district = req.body.district;
-    const coordinates = req.body.coordinates;
+    // const coordinates = req.body.coordinates;
     const numOfTowers = req.body.numOfTowers;
     const numOfUnits = req.body.numOfUnits;
     const facilities = req.body.facilities;
     const description = req.body.description;
     const developer = req.body.developer;
     const propertyManagement = req.body.propertyManagement;
-    const images = req.body.images;
-    const floorPlan = req.body.floorPlan;
-    const otherFiles = req.body.otherFiles;
+    // const images = req.body.images;
+    // const floorPlan = req.body.floorPlan;
+    // const otherFiles = req.body.otherFiles;
 
     controller
-        .updateBuilding(id, name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, images, floorPlan, otherFiles)
+        // .updateBuilding(id, name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, images, floorPlan, otherFiles)
+        .updateBuilding(id, name, year, address, district, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement)
         .then((data) => {
+
             res.send(data);
         })
         .catch((error) => {
+
             res.send(error)
         });
 

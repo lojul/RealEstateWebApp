@@ -18,6 +18,7 @@ const drawerWidth = 240;
 
 function EditBuildingPage(props) {
     let { pageId } = useParams();
+
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -59,7 +60,7 @@ function EditBuildingPage(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap component="div">
-                        Add New Building
+                        Edit Building
                     </Typography>
                 </Toolbar>
             </AppBar>

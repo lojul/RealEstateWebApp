@@ -19,6 +19,7 @@ export default function AddNewBuildingForm() {
         name: '',
         year: '',
         address: '',
+        district: '', //CHANGED
         numOfTowers: '',
         numOfUnits: '',
         facilities: '',

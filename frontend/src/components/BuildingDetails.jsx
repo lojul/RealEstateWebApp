@@ -48,8 +48,7 @@ export default function BuildingDetails(props) {
 
     const editBuilding = () => {
         alert("You are about to edit a building!")
-        // navigate to edit page
-        navigate("../EditBuilding/4") //CHANGE
+        navigate(`../EditBuilding/${buildingId}`)
     }
 
     return (

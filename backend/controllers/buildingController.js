@@ -65,13 +65,13 @@ const addBuilding = (name, year, address, district, coordinates, numOfTowers, nu
     });
 }
 
-// update building (without images, floorPlan, otherFiles)
-const updateBuilding = (id, name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement) => {
+// update building (coordinates, without images, floorPlan, otherFiles)
+const updateBuilding = (id, name, year, address, district, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement) => {
 
-    const sql = 'UPDATE buildings SET name = $1, year = $2, address = $3, district = $4, coordinates = $5, "numOfTowers" = $6, "numOfUnits" = $7, facilities = $8, description = $9, developer = $10, "propertyManagement" = $11 WHERE id = $12';
+    const sql = 'UPDATE buildings SET name = $1, year = $2, address = $3, district = $4, "numOfTowers" = $5, "numOfUnits" = $6, facilities = $7, description = $8, developer = $9, "propertyManagement" = $10 WHERE id = $11';
 
     return new Promise(async (resolve, reject) => {
-        client.query(sql, [name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, id])
+        client.query(sql, [name, year, address, district, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, id])
             .then((data) => {
                 resolve("Building updated successfully!")
             })
