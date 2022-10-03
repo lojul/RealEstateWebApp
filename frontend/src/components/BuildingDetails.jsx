@@ -8,18 +8,22 @@ import { Typography } from '@mui/material';
 import Axios from 'axios';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
-// import EditRoundedIcon from '@mui/icons-material/EditRounded';
-// import IconButton from '@mui/material/IconButton';
-// import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
-// import OutlinedInput from '@mui/material/OutlinedInput';
-// import InputLabel from '@mui/material/InputLabel';
-// import FormControl from '@mui/material/FormControl';
+import {
+    ref,
+    getDownloadURL,
+    listAll,
+} from "firebase/storage";
+import { storage } from "../firebase";
 
 export default function BuildingDetails(props) {
     const navigate = useNavigate();
 
     const [buildingDetails, setBuildingDetails] = React.useState([]);
     const buildingId = props.id;
+
+    const [imageUrls, setImageUrls] = React.useState([]);
+    const imagesListRef = ref(storage, `buildingImages/${props.id}`);
+
     React.useEffect(() => {
         Axios.get(`${process.env.REACT_APP_SERVER}/building/searchById?id=${buildingId}`)
             .then((response) => {
@@ -31,6 +35,17 @@ export default function BuildingDetails(props) {
 
             })
     }, [buildingId]);
+
+    React.useEffect(() => {
+        // RESOLVE: Two images display at beginning
+        listAll(imagesListRef).then((response) => {
+            response.items.forEach((item) => {
+                getDownloadURL(item).then((url) => {
+                    setImageUrls((prev) => [...prev, url]);
+                });
+            });
+        });
+    }, []); //RESOLVE dependancy warning
 
     const deleteBuilding = () => {
         alert("You are about to delete a building!")
@@ -59,7 +74,12 @@ export default function BuildingDetails(props) {
                     return (
                         <Grid container spacing={3} key={building.id}>
 
-                            <Grid item xs={12}><Box sx={{ bgcolor: '#cfe8fd', height: '50vh' }} /></Grid>
+                            <Grid item xs={12}>
+                                {/* <Box sx={{ bgcolor: '#cfe8fd', height: '50vh' }} /> */}
+                                {imageUrls.map((url) => {
+                                    return <img src={url} alt="building" key={Math.random()} />;
+                                })}
+                            </Grid>
                             <Grid item xs={12} md={6}><Box sx={{ bgcolor: '#FAF9F6', height: '100vh' }} >
                                 <Stack spacing={2}>
                                     <Typography><b>Name</b></Typography>
