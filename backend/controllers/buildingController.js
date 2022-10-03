@@ -57,9 +57,18 @@ const addBuilding = (name, year, address, district, coordinates, numOfTowers, nu
     return new Promise(async (resolve, reject) => {
         client.query(sql, [name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, images, floorPlan, otherFiles])
             .then((data) => {
-                resolve("Building added successfully!")
+                // console.log(data)
+                // resolve("Building added successfully!")
+                client.query("SELECT currval(pg_get_serial_sequence('buildings','id'));").then((data) => {
+                    // console.log(data.rows[0].currval)
+                    resolve(data.rows[0].currval)
+                }).catch((error) => {
+                    console.log(error)
+                    reject(error);
+                })
             })
             .catch((error) => {
+                console.log(error)
                 reject(error);
             })
     });

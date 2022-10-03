@@ -51,7 +51,7 @@ router.post("/add", async (req, res) => {
     controller
         .addBuilding(name, year, address, district, coordinates, numOfTowers, numOfUnits, facilities, description, developer, propertyManagement, images, floorPlan, otherFiles)
         .then((data) => {
-            res.send({ message: "Building added successfully!" });
+            res.send(data);
         })
         .catch((error) => {
             res.send(error)

@@ -33,6 +33,7 @@ export default function AddNewBuildingForm() {
     const [fileImages, setFileImages] = React.useState([]);
     const [fileFloorplan, setFileFloorplan] = React.useState([]);
     const [fileOther, setFileOther] = React.useState([]);
+    const [insertedId, setInsertedId] = React.useState(null);
 
     const selectFileImages = (e) => {
         setFileImages(e.target.files);
@@ -82,7 +83,9 @@ export default function AddNewBuildingForm() {
 
                 }).then((response) => {
 
-                    alert(response.data.message)
+                    alert("Building added successfully!")
+                    setInsertedId(response.data);
+
                 }).catch((e) => {
 
                     alert(e.response.data.error);
@@ -97,7 +100,7 @@ export default function AddNewBuildingForm() {
     }
     const submitBuildingImages = () => {
         if (fileImages.length === 0) return;
-        const filePath = `buildingImages/${fileImages[0].name + v4()}`
+        const filePath = `buildingImages/${insertedId}/${fileImages[0].name + v4()}`
         const imageRef = ref(storage, filePath);
         uploadBytes(imageRef, fileImages[0]).then(() => {
             alert("Building images uploaded!")
@@ -107,7 +110,7 @@ export default function AddNewBuildingForm() {
     const submitFloorPlans = () => {
         if (fileFloorplan.length === 0) return;
 
-        const filePath = `buildingFloorPlans/${fileFloorplan[0].name + v4()}`
+        const filePath = `buildingFloorPlans/${insertedId}/${fileFloorplan[0].name + v4()}`
         const imageRef = ref(storage, filePath);
         uploadBytes(imageRef, fileFloorplan[0]).then(() => {
             alert("Floor plans uploaded!")
@@ -118,7 +121,7 @@ export default function AddNewBuildingForm() {
     const submitOtherFiles = () => {
         if (fileOther.length === 0) return;
 
-        const filePath = `buildingOtherFiles/${fileOther[0].name + v4()}`
+        const filePath = `buildingOtherFiles/${insertedId}/${fileOther[0].name + v4()}`
         const imageRef = ref(storage, filePath);
         uploadBytes(imageRef, fileOther[0]).then(() => {
             alert("Other files uploaded!")
